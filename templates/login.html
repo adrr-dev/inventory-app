@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventory Manager</title>
+    <link href="../static/sylte.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="logging">
+      <h2>Log in to Account</h2>
+      <form action="/inventory" method="GET">
+        <div>
+          <label for="username">Usernam:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="text" id="password" name="password" required>
+        </div>
+        <button type="submit">Enter</button>
+      </form>
+    </div>
+    <div id="logging">
+      <h3>Create Account</h3>
+      <form action="/new-account" method="GET">
+        <div>
+          <button type="submit">Create new account</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

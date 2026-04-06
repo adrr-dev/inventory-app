@@ -14,6 +14,6 @@ type Inventory struct {
 	gorm.Model
 	Item     string
 	Location string
-	Status   bool
+	Status   bool // for now status is not used
 	UserID   uint
 }

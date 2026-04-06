@@ -32,7 +32,7 @@ func (s InvenService) FetchInventory(itemID, userID uint) (*repository.Inventory
 }
 
 func (s InvenService) RemoveInventory(itemID, userID uint) error {
-	result := s.DB.Where("id = ? AND user_id = ?", itemID, userID).Model(&repository.Inventory{}).Delete(nil)
+	result := s.DB.Where("id = ? AND user_id = ?", itemID, userID).Delete(&repository.Inventory{})
 	if result.Error != nil {
 		return result.Error
 	}

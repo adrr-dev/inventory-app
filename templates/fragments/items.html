@@ -1,0 +1,14 @@
+<div id="items">
+  {{ range .Items }}
+  <div id="item">
+    <span>Item: {{.Item}}</span>
+    <span>Location: {{.Location}}</span>
+    <button hx-get="item/edit/{{$.UserID}}/{{.ID}}"
+            hx-target="#item"
+            hx-swap="outerHTML">Edit</button>
+    <button hx-delete="item/{{$.UserID}}/{{.ID}}"
+            hx-target="#item"
+            hx-swap="outerHTML">Delete</button>
+  </div>
+  {{ end }}
+</div>

@@ -1,0 +1,6 @@
+<form hx-put="/item/{{.UserID}}/{{.ID}}" hx-target="this">
+  <input type="text" name="item" value="{{.Item}}">
+  <input type="text" name="location" value="{{.Location}}">
+  <button type="submit">Save</button>
+  <button hx-get="/item/{{.UserID}}/{{.ID}}">Cancel</button>
+</form>
