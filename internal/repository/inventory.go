@@ -7,7 +7,7 @@ type User struct {
 	gorm.Model
 	Username  string
 	Password  string
-	Inventory []*Inventory
+	Inventory []Inventory
 }
 
 type Inventory struct {
