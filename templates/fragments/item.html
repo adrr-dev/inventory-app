@@ -1,10 +1,10 @@
-<div id="item">
+<div id="item-{{.ID}}">
   <span>Item: {{.Item}}</span>
   <span>Location: {{.Location}}</span>
   <button hx-get="item/edit/{{.UserID}}/{{.ID}}"
-          hx-target="#item"
+          hx-target="#item-{{.ID}}"
           hx-swap="outerHTML">Edit</button>
   <button hx-delete="item/{{.UserID}}/{{.ID}}"
-          hx-target="#item"
+          hx-target="#item-{{.ID}}"
           hx-swap="outerHTML">Delete</button>
 </div>

@@ -4,31 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inventory Manager</title>
-    <link href="../static/sylte.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
   </head>
   <body>
     <h1>Your Inventory!</h1>
-    <form hx-post="/new-item/{{.UserID}}"
-          hx-target="#items"
-          hx-swap="outerHTML">
+    <form hx-post="/new-item/{{.ID}}" hx-target="#items" hx-swap="outerHTML">
       <input type="text" name="item" required>
       <input type="text" name="location" required>
       <button type="submit">Save</button>
     </form>
     <div id="items">
-      {{ range .Items }}
-      <div id="item">
+      {{ range .Inventory }}
+      <div id="item-{{.ID}}">
         <span>Item: {{.Item}}</span>
         <span>Location: {{.Location}}</span>
-        <button hx-get="item/edit/{{$.UserID}}/{{.ID}}"
-                hx-target="#item"
+        <button hx-get="item/edit/{{.UserID}}/{{.ID}}"
+                hx-target="#item-{{.ID}}"
                 hx-swap="outerHTML">Edit</button>
-        <button hx-delete="item/{{$.UserID}}/{{.ID}}"
-                hx-target="#item"
+        <button hx-delete="item/{{.UserID}}/{{.ID}}"
+                hx-target="#item-{{.ID}}"
                 hx-swap="outerHTML">Delete</button>
       </div>
       {{ end }}
+    </div>
+    <div>
+      <form action="user/{{.ID}}" method="POST">
+        <button type="submit">Delete Account</button>
+      </form>
     </div>
   </body>
 </html>

@@ -14,7 +14,7 @@ import (
 type MyUserService interface {
 	FetchUser(username, password string) (*repository.User, error)
 	CreateUser(username, password string) error
-	DeleteUser(username, password string) error
+	DeleteUser(id uint) error
 }
 type MyInvenService interface {
 	ListInventory(userID uint) ([]repository.Inventory, error)
@@ -84,29 +84,32 @@ func (h Handling) CreateUser(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
+func (h Handling) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	strID := r.PathValue("id")
+	i, _ := strconv.Atoi(strID)
+	userID := uint(i)
+
+	err := h.UserService.DeleteUser(userID)
+	if err != nil {
+		message := fmt.Sprintf("user could not be deleted: %e", err)
+		h.renderError(w, message, http.StatusNotFound)
+		return
+	}
+
+	log.Printf("user with user id: %s has been deleted", strID)
+
+	http.Redirect(w, r, "/login", http.StatusFound)
+}
+
 func (h Handling) InventoryHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 
-	user, err := h.UserService.FetchUser(username, password)
+	data, err := h.UserService.FetchUser(username, password)
 	if err != nil {
 		message := fmt.Sprintf("user could not be found. Create a new account instead: %e", err)
 		h.renderError(w, message, http.StatusNotFound)
 		return
-	}
-	userID := user.ID
-	items, err := h.InvenService.ListInventory(userID)
-	if err != nil {
-		message := fmt.Sprintf("inventory could not be listed: %e", err)
-		h.renderError(w, message, http.StatusNotFound)
-		return
-	}
-	data := struct {
-		UserID uint
-		Items  []repository.Inventory
-	}{
-		userID,
-		items,
 	}
 
 	err = h.Tmpls.ExecuteTemplate(w, "inventory.html", data)

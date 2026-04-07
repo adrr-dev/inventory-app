@@ -8,11 +8,15 @@ import (
 )
 
 func SetupRoutes(mux *http.ServeMux, handlers *handlers.Handling) {
+	fileServer := http.FileServer(http.Dir("./static"))
+	mux.Handle("GET /static/", http.StripPrefix("/static/", fileServer))
+
 	mux.Handle("GET /{$}", http.RedirectHandler("/login", http.StatusFound))
 	mux.HandleFunc("GET /login", handlers.LoginHandler)
 	mux.HandleFunc("GET /inventory", handlers.InventoryHandler)
 	mux.HandleFunc("GET /new-account", handlers.NewAccount)
 	mux.HandleFunc("POST /create-account", handlers.CreateUser)
+	mux.HandleFunc("POST /user/{id}", handlers.DeleteUser)
 
 	mux.HandleFunc("POST /new-item/{userid}", handlers.NewItem)
 	mux.HandleFunc("DELETE /item/{userid}/{id}", handlers.DeleteItem)

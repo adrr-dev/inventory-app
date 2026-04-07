@@ -1,0 +1,49 @@
+/* 1. Global Reset & Dark Theme */
+body {
+  background-color: #1a1b26 !important;
+  color: #a9b1d6 !important;
+  font-family: monospace;
+  max-width: 600px;
+  margin: 50px auto;
+  text-align: center; /* Centers your H1 and Form */
+}
+
+/* 2. The List Container */
+#items {
+  text-align: left; /* Keeps the actual todo text left-aligned */
+  margin-top: 20px;
+}
+
+/* 3. The Individual Todo Row */
+#items > div {
+  background: #24283b !important;
+  border: 1px solid #414868;
+  padding: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 4. Inputs & Buttons */
+input {
+  background: #24283b;
+  color: white;
+  border: 1px solid #7aa2f7;
+  padding: 5px;
+}
+
+button {
+  cursor: pointer;
+  background: #7aa2f7 !important;
+  color: #1a1b26 !important;
+  border: none;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+/* 5. The Delete Button Gimmick */
+button[hx-delete] {
+  background: #f7768e !important;
+  margin-left: 5px;
+}

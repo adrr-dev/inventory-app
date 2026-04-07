@@ -13,7 +13,7 @@ type UserService struct {
 
 func (s UserService) FetchUser(username, password string) (*repository.User, error) {
 	var user repository.User
-	result := s.DB.Where("username = ? AND password = ?", username, password).First(&user)
+	result := s.DB.Preload("Inventory").Where("username = ? AND password = ?", username, password).First(&user)
 	if result.Error != nil {
 		return nil, fmt.Errorf("user not found, username or password incorrect: %e", result.Error)
 	}
@@ -31,13 +31,8 @@ func (s UserService) CreateUser(username, password string) error {
 	return nil
 }
 
-func (s UserService) DeleteUser(username, password string) error {
-	user, err := s.FetchUser(username, password)
-	if err != nil {
-		return err
-	}
-
-	result := s.DB.Where("id = ?", user.ID).Delete(&repository.User{})
+func (s UserService) DeleteUser(id uint) error {
+	result := s.DB.Where("id = ?", id).Delete(&repository.User{})
 	if result.Error != nil {
 		return result.Error
 	}
